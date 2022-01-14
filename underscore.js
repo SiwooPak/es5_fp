@@ -128,6 +128,7 @@ exports._go = function (arg) {
   return _pipe.apply(null, fns)(arg);
 };
 
+exports._identity = (val) => val;
 const _identity = (val) => val;
 // const _values = (data) => _map(data, _identity);
 exports._values = (data) => _map(_identity)(data);
