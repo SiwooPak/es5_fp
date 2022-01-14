@@ -21,6 +21,10 @@ const _curryr = function (fn) {
 //   return obj === null ? undefined : obj[key];
 // }
 
+exports._get = _curryr((obj, key) =>
+  obj === null ? undefined : obj[key]
+);
+
 const _get = _curryr((obj, key) =>
   obj === null ? undefined : obj[key]
 );
@@ -34,6 +38,7 @@ const _get = _curryr((obj, key) =>
 // };
 const _isObject = (obj) => typeof obj === "object" && !!obj;
 const _keys = (obj) => (_isObject(obj) ? Object.keys(obj) : []);
+exports._keys = (obj) => (_isObject(obj) ? Object.keys(obj) : []);
 
 const _length = _get("length");
 exports._each = function (list, iter) {
@@ -70,6 +75,9 @@ const _map1 = function (lists, mapper) {
 
 exports._map = _curryr(_map1);
 exports._filter = _curryr(_filter1);
+
+const _map = _curryr(_map1);
+const _filter = _curryr(_filter1);
 
 const slice = Array.prototype.slice;
 
@@ -119,3 +127,10 @@ exports._go = function (arg) {
   const fns = _rest(arguments);
   return _pipe.apply(null, fns)(arg);
 };
+
+const _identity = (val) => val;
+// const _values = (data) => _map(data, _identity);
+exports._values = (data) => _map(_identity)(data);
+
+exports._pluck = (data, key) => _map(data, _get(key));
+const _pluck = (data, key) => _map(data, _get(key));
