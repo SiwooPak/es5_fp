@@ -139,7 +139,7 @@ const _pluck = (data, key) => _map(data, _get(key));
 const _negate = (func) => (val) => !func(val);
 exports._negate = (func) => (val) => !func(val);
 const _reject = (data, predi) => _filter(data, _negate(predi));
-exports._reject = (data, predi) => _filter(data, _negate(predi));
+exports._reject = _curryr(_reject);
 const _compact = _filter(_identity);
 exports._compact = _filter(_identity);
 
@@ -183,3 +183,14 @@ exports._some = (data, predi) =>
 
 exports._every = (data, predi) =>
   _findIndex(data, _negate(predi || _identity)) === -1;
+
+exports._min = (data) => _reduce(data, (a, b) => (a < b ? a : b));
+exports._max = (data) => _reduce(data, (a, b) => (a > b ? a : b));
+
+let _minBy = (data, iter) =>
+  _reduce(data, (a, b) => (iter(a) < iter(b) ? a : b));
+let _maxBy = (data, iter) =>
+  _reduce(data, (a, b) => (iter(a) > iter(b) ? a : b));
+
+exports._minBy = _curryr(_minBy);
+exports._maxBy = _curryr(_maxBy);

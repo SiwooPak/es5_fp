@@ -26,12 +26,12 @@ console.log(
   )
 );
 
-// _go(
-//   users,
-//   _find(users, (user) => user.id === 3),
-//   _get("name"),
-//   console.log
-// );
+_go(
+  users,
+  _find((user) => user.id === 3),
+  _get("name"),
+  console.log
+);
 // 3-2. _findIndex
 // 배열의 해당값의 인덱스를 리턴
 
