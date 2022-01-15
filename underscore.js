@@ -135,3 +135,51 @@ exports._values = (data) => _map(_identity)(data);
 
 exports._pluck = (data, key) => _map(data, _get(key));
 const _pluck = (data, key) => _map(data, _get(key));
+
+const _negate = (func) => (val) => !func(val);
+exports._negate = (func) => (val) => !func(val);
+const _reject = (data, predi) => _filter(data, _negate(predi));
+exports._reject = (data, predi) => _filter(data, _negate(predi));
+const _compact = _filter(_identity);
+exports._compact = _filter(_identity);
+
+const _find = _curryr((list, predi) => {
+  let keys = _keys(list);
+
+  for (let i = 0, len = keys.length; i < len; i++) {
+    let val = list[keys[i]];
+    if (predi(val)) return val;
+  }
+});
+exports._find = _curryr((list, predi) => {
+  let keys = _keys(list);
+
+  for (let i = 0, len = keys.length; i < len; i++) {
+    let val = list[keys[i]];
+    if (predi(val)) return val;
+  }
+});
+
+const _findIndex = _curryr((list, predi) => {
+  const keys = _keys(list);
+
+  for (let i = 0, len = keys.length; i < len; i++) {
+    if (predi(list[keys[i]])) return i;
+  }
+  return -1;
+});
+
+exports._findIndex = _curryr((list, predi) => {
+  const keys = _keys(list);
+
+  for (let i = 0, len = keys.length; i < len; i++) {
+    if (predi(list[keys[i]])) return i;
+  }
+  return -1;
+});
+
+exports._some = (data, predi) =>
+  _findIndex(data, predi || _identity) !== -1;
+
+exports._every = (data, predi) =>
+  _findIndex(data, _negate(predi || _identity)) === -1;
