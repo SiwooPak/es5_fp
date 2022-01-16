@@ -16,6 +16,7 @@ const {
 
 // 1. 지연 평가를 시작시키고 유지시키는 함수
 // 1-1. map
+// 1-2. filter, reject
 let mi = 0,
   fi = 0;
 
