@@ -16,7 +16,6 @@ const {
   flatten,
   deep_pluck,
 } = require("../partial");
-const { _filter } = require("../underscore");
 const { users, posts, comments } = require("./dummy");
 
 // 5. users+posts+comments (indexBy와 groupBy로 효율 높이기)
@@ -49,7 +48,7 @@ const posts2 = go(
   map((post) => {
     return extend(
       {
-        comments: comments2[post.id] || [],
+        comments: comments3[post.id] || [],
         user: users2[post.user_id],
       },
       post
@@ -134,5 +133,5 @@ go(
 const result = filter(posts2, (post) =>
   find(post.comments, (comment) => comment.user_id === 105)
 );
-console.log(posts2)
+console.log(posts2);
 console.log(result);
